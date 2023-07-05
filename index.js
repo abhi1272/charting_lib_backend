@@ -9,7 +9,7 @@ const server = http.createServer(app)
 
 const io = new Server(server, {
   cors: {
-    origin: 'http://localhost:3000', // allow requests from any domain
+    origin: '*', // allow requests from any domain
   }
 })
 
