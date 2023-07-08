@@ -6,7 +6,7 @@ const cors = require('cors')
 const sql = require('mssql')
 const fs = require('fs');
 require('dotenv').config();
-console.log(process.env.user);
+console.log('----------', process.env.user);
 
 const config = {
     user: process.env.user,
@@ -166,9 +166,11 @@ io.on('connection', (socket) => {
   const prevDate = temp.setMinutes(temp.getMinutes()-1);
   cTs = new Date(prevDate).setSeconds('0', '0');
 
-  setInterval(async () => {
-    await broadcastTrackingData(socket, token)
-  }, 10000)
+  socket.on('fetch-data', (data) => {
+    setInterval(async () => {
+      await broadcastTrackingData(socket, token)
+    }, 10000)
+  })
 
   socket.on('disconnect', (err) => {
       console.log('Got disconnected');
